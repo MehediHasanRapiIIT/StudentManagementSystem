@@ -9,21 +9,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class SchoolController extends Controller
+class AdminController extends Controller
 {
     //
-    public function school_list(){
-        $data['getSchool'] = User::getSchool();
-        $data['meta_title'] = "School";
-        return view('backend.school.list',$data);
+    public function admin_list(){
+        $data['getRecord'] = User::getAdmin();
+        $data['meta_title'] = "Admin";
+        return view('backend.admin.list',$data);
     }
 
-    public function create_school(){
-        $data['meta_title'] = "Create School";
-        return view('backend.school.create',$data);
+    public function create_admin(){
+        $data['meta_title'] = "Create Admin";
+        return view('backend.admin.create',$data);
     }
 
-    public function insert_school(Request $request){
+    public function insert_admin(Request $request){
 
         request()->validate([
            'email' => 'required|email|unique:users', 
@@ -36,7 +36,7 @@ class SchoolController extends Controller
         $user->password = Hash::make($request->password);
         $user->address = trim($request->address);
         $user->status = trim($request->status);
-        $user->is_admin = 3;
+        $user->is_admin = trim($request->is_admin);
         $user->created_by_id = Auth::user()->id;
         $user->save();
 
@@ -51,19 +51,19 @@ class SchoolController extends Controller
             $user->save();
         }
 
-        return redirect('panel/school')->with('success', 'School Created Successfully');
+        return redirect('panel/admin')->with('success', 'Admin Created Successfully');
 
         
         
     }
 
-    public function edit_school($id){
-        $data['getSchool'] = User::getSingle($id);
-        $data['meta_title'] = "Edit School";
-        return view('backend.school.edit',$data);
+    public function edit_admin($id){
+        $data['getRecord'] = User::getSingle($id);
+        $data['meta_title'] = "Edit Admin";
+        return view('backend.admin.edit',$data);
     }
 
-    public function update_school(Request $request,$id){
+    public function update_admin(Request $request,$id){
 
         request()->validate([
             'email' => 'required|email|unique:users,email,'.$id,
@@ -79,6 +79,7 @@ class SchoolController extends Controller
         }
         $user->address = trim($request->address);
         $user->status = trim($request->status);
+        $user->is_admin = trim($request->is_admin);
         $user->save();
 
         if(!empty($request->file('profile_pic'))){
@@ -92,13 +93,13 @@ class SchoolController extends Controller
             $user->save();
         }
 
-        return redirect('panel/school')->with('success', 'School Updated Successfully');
+        return redirect('panel/admin')->with('success', 'Admin Updated Successfully');
     }
 
-    public function delete_school($id){
+    public function delete_admin($id){
         $user = User::getSingle($id);
         $user->is_delete = 1;
         $user->save();
-        return redirect('panel/school')->with('success', 'School Deleted Successfully');
+        return redirect('panel/admin')->with('success', 'Admin Deleted Successfully');
     }
 }
