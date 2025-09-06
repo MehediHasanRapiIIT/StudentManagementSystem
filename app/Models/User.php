@@ -77,6 +77,17 @@ class User extends Authenticatable
         return $return;
     }
 
+
+    public static function getSchoolAll($value=''){
+        return self::select('*')
+            ->where('is_admin',"=",3)
+            ->where('is_delete',"=",0)
+            ->where('status',"=",1)
+            ->orderBy('id','desc')
+            ->get();
+    }
+
+
     public static function getAdmin(){
         $return = self::select('*');
             if(!empty(Request::get('id'))){
@@ -113,6 +124,45 @@ class User extends Authenticatable
         return $return;
     }
 
+    public static function getTeacher($user_id,$user_type){
+        $return = self::select('*');
+            if(!empty(Request::get('id'))){
+
+                $return= $return->where('id',"=",Request::get('id'));
+            }
+            if(!empty(Request::get('name'))){
+                $return= $return->where('name',"like","%".Request::get('name')."%");
+            }
+            if(!empty(Request::get('last_name'))){
+                $return= $return->where('last_name',"like","%".Request::get('last_name')."%");
+            }
+            if(!empty(Request::get('email'))){
+                $return= $return->where('email',"like","%".Request::get('email')."%");
+            }
+            if(!empty(Request::get('gender'))){
+                
+                $return= $return->where('gender',"=",Request::get('gender'));
+        }
+            if(!empty(Request::get('status'))){
+                $status = Request::get('status');
+                if($status==100){
+                    $status = 0;
+                }
+                $return= $return->where('status',"=",Request::get('status','=',$status));
+        }
+
+        if($user_type == 3){
+            $return= $return->where('created_by_id',"=",$user_id);
+        }
+
+        $return= $return->where('is_admin',"=",5)
+            ->where('is_delete',"=",0)
+            ->orderBy('id','desc')
+            ->paginate(20);
+
+        return $return;
+    }
+
     public function getProfile(){
         if(!empty($this->profile_pic) && file_exists('upload/profile/'.$this->profile_pic)){
             return url('upload/profile/'.$this->profile_pic);
@@ -121,6 +171,10 @@ class User extends Authenticatable
 
     public static function getSingle($id){
         return self::find($id);
+    }
+
+    public function getCreatedBy(){
+        return $this->belongsTo(User::class,'created_by_id');
     }
 
 

@@ -5,6 +5,8 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\SchoolController;
 use App\Http\Controllers\Backend\AdminController;
 
+use App\Http\Controllers\Backend\TeacherController;
+use Dom\Text;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,6 +25,10 @@ Route::group(['middleware'=>'common'], function () {
 
     Route::get("panel/dashboard", [DashboardController::class, 'dashboard']);
 
+});
+
+
+Route::group(['middleware'=>'admin'], function () {
     Route::get("panel/school", [SchoolController::class, 'school_list']);
 
     Route::get("panel/school/create", [SchoolController::class, 'create_school']);
@@ -50,4 +56,21 @@ Route::group(['middleware'=>'common'], function () {
     Route::post("panel/admin/edit/{id}", [AdminController::class, 'update_admin']);
 
     Route::get("panel/admin/delete/{id}", [AdminController::class, 'delete_admin']);
+
+});
+
+Route::group(['middleware'=>'school'], function () {
+
+    Route::get("panel/teacher", [TeacherController::class, 'teacher_list']);
+
+    Route::get("panel/teacher/create", [TeacherController::class, 'create_teacher']);
+
+    Route::post("panel/teacher/create", [TeacherController::class, 'insert_teacher']);
+
+    Route::get("panel/teacher/edit/{id}", [TeacherController::class, 'edit_teacher']);
+
+    Route::post("panel/teacher/edit/{id}", [TeacherController::class, 'update_teacher']);
+
+    Route::get("panel/teacher/delete/{id}", [TeacherController::class, 'delete_teacher']);
+
 });

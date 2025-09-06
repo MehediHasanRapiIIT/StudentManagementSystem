@@ -20,6 +20,7 @@ class AuthCommonMiddleware
         if(!empty(Auth::check())){
             return $next($request);
         }else{
+            Auth::logout();
             return redirect(url(''));
         }
         

@@ -20,7 +20,7 @@ class AuthController extends Controller
 
          $auth = Auth::attempt(
             [
-                'email' => $request->email, 'password' => $request->password], true);
+                'email' => $request->email, 'password' => $request->password, 'is_delete'=>0], true);
         if($auth){
             return redirect('panel/dashboard');
         }
