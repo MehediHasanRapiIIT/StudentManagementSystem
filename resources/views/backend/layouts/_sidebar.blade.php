@@ -55,12 +55,15 @@
         @endif
 
         @if(Auth::user()->is_admin == 3)
-            <li class="xn-openable">
+            <li class="xn-openable {{Request::segment(2) == 'class' || Request::segment(2) == 'subject' ? 'active' : ''}}">
                 <a href="#"><span class="fa fa-building"></span> <span class="xn-text">Academics</span></a>
                 <ul>
-                    <li><a href="{{url('panel/class')}}">Class</a></li>
+                    <li class="{{Request::segment(2) == 'class' ? 'active' : ''}}"><a href="{{url('panel/class')}}"><span class="fa fa-users"></span> <span class="xn-text">Class</span></a></li>
+
+                    <li class="{{Request::segment(2) == 'subject' ? 'active' : ''}}"><a href="{{url('panel/subject')}}"><span class="fa fa-book"></span> <span class="xn-text">Subject</span></a></li>
                 </ul>
             </li>
+            
 
         @endif
         <li class="xn-openable">
