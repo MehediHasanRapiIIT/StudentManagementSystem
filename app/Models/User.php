@@ -163,6 +163,43 @@ class User extends Authenticatable
         return $return;
     }
 
+
+    public static function getSchoolAdmin($user_id,$user_type){
+        $return = self::select('*');
+            if(!empty(Request::get('id'))){
+
+                $return= $return->where('id',"=",Request::get('id'));
+            }
+            if(!empty(Request::get('name'))){
+                $return= $return->where('name',"like","%".Request::get('name')."%");
+            }
+            if(!empty(Request::get('email'))){
+                $return= $return->where('email',"like","%".Request::get('email')."%");
+            }
+            if(!empty(Request::get('address'))){
+                $return= $return->where('address',"like","%".Request::get('address')."%");
+            }
+            
+            if(!empty(Request::get('status'))){
+                $status = Request::get('status');
+                if($status==100){
+                    $status = 0;
+                }
+                $return= $return->where('status',"=",Request::get('status','=',$status));
+        }
+
+        if($user_type == 3){
+            $return= $return->where('created_by_id',"=",$user_id);
+        }
+
+        $return= $return->where('is_admin',"=",4)
+            ->where('is_delete',"=",0)
+            ->orderBy('id','desc')
+            ->paginate(20);
+
+        return $return;
+    }
+
     public function getProfile(){
         if(!empty($this->profile_pic) && file_exists('upload/profile/'.$this->profile_pic)){
             return url('upload/profile/'.$this->profile_pic);

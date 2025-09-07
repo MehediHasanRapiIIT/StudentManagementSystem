@@ -50,6 +50,8 @@ class TeacherController extends Controller
         $user->is_admin = 5;
         if(Auth::user()->is_admin == 1|| Auth::user()->is_admin == 2){
             $user->created_by_id = trim($request->school_id);
+        }else{
+            $user->created_by_id = Auth::user()->id;
         }
         $user->save();
 
