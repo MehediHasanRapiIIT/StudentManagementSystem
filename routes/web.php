@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\AdminController;
 
 use App\Http\Controllers\Backend\TeacherController;
 use App\Http\Controllers\Backend\SchoolAdminController;
+use App\Http\Controllers\Backend\ClassController;
 use Dom\Text;
 use Illuminate\Support\Facades\Route;
 
@@ -87,5 +88,18 @@ Route::group(['middleware'=>'school'], function () {
     Route::post("panel/school_admin/edit/{id}", [SchoolAdminController::class, 'update_school_admin']);
 
     Route::get("panel/school_admin/delete/{id}", [SchoolAdminController::class, 'delete_school_admin']);
+
+    //class Route
+    Route::get("panel/class", [ClassController::class, 'class_list']);
+
+    Route::get("panel/class/create", [ClassController::class, 'create_class']);
+
+    Route::post("panel/class/create", [ClassController::class, 'insert_class']);
+
+    Route::get("panel/class/edit/{id}", [ClassController::class, 'edit_class']);
+
+    Route::post("panel/class/edit/{id}", [ClassController::class, 'update_class']);
+
+    Route::get("panel/class/delete/{id}", [ClassController::class, 'delete_class']);
 
 });
