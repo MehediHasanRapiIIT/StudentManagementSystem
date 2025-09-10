@@ -49,6 +49,9 @@
             <li class="{{Request::segment(2) == 'teacher' ? 'active' : ''}}">
                 <a href="{{url('panel/teacher')}}"><span class="fa fa-male"></span> <span class="xn-text">Teacher</span></a>
             </li>
+            <li class="{{Request::segment(2) == 'student' ? 'active' : ''}}">
+                <a href="{{url('panel/student')}}"><span class="fa fa-male"></span> <span class="xn-text">Student</span></a>
+            </li>
 
 
 

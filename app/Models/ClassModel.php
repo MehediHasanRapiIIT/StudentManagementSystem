@@ -40,4 +40,15 @@ class ClassModel extends Model
 
         return $return;
     }
+
+    public static function getRecordActive($user_id){
+        $return = self::select('*')
+            ->where('status',"=",1)
+            ->where('created_by_id','=',$user_id)
+            ->where('is_delete',"=",0)
+            ->orderBy('id','desc')
+            ->get();
+
+        return $return;
+    }
 }
