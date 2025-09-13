@@ -62,7 +62,8 @@
                                         class="required"></span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
-                                        <span class="input-group-addon"><span class="fa fa fa-sort-numeric-asc"></span></span>
+                                        <span class="input-group-addon"><span
+                                                class="fa fa fa-sort-numeric-asc"></span></span>
                                         <input type="text" class="form-control" name="admission_number" required
                                             value="{{old('admission_number', $getRecord->admission_number)}}" />
                                     </div>
@@ -76,7 +77,8 @@
                                         class="required"></span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
-                                        <span class="input-group-addon"><span class="fa fa fa-sort-numeric-asc"></span></span>
+                                        <span class="input-group-addon"><span
+                                                class="fa fa fa-sort-numeric-asc"></span></span>
                                         <input type="text" class="form-control" name="roll_number" required
                                             value="{{old('roll_number', $getRecord->roll_number)}}" />
                                     </div>
@@ -86,16 +88,14 @@
 
 
                             <div class="form-group">
-                                <label class="col-md-3 col-xs-12 control-label">Class <span
-                                        class="required"></span></label>
+                                <label class="col-md-3 col-xs-12 control-label">Class <span class="required"></span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <select name="class_id" id="" class="form-control" required>
                                         <option value="">Select</option>
-                                        @foreach ($getClass as $class )
-                                            <option 
-                                            {{($getRecord->class_id == $class->id) ? 'selected' : '' }}
-                                            value="{{$class->id}}">{{$class->name}}</option>
-                                            
+                                        @foreach ($getClass as $class)
+                                            <option {{($getRecord->class_id == $class->id) ? 'selected' : '' }}
+                                                value="{{$class->id}}">{{$class->name}}</option>
+
                                         @endforeach
 
                                     </select>
@@ -111,8 +111,10 @@
                                 <div class="col-md-6 col-xs-12">
                                     <select name="gender" id="" class="form-control" required>
                                         <option value="">Select</option>
-                                        <option {{($getRecord->gender == "Male") ? 'selected' : '' }} value="Male">Male</option>
-                                        <option {{($getRecord->gender == "Female") ? 'selected' : '' }} value="Female">Female</option>
+                                        <option {{($getRecord->gender == "Male") ? 'selected' : '' }} value="Male">Male
+                                        </option>
+                                        <option {{($getRecord->gender == "Female") ? 'selected' : '' }} value="Female">Female
+                                        </option>
 
                                     </select>
                                 </div>
@@ -130,48 +132,45 @@
                                     <div class="required">{{$errors->first('date_of_birth')}}</div>
                                 </div>
                             </div>
-                            
+
 
 
                             <div class="form-group">
-                                <label class="col-md-3 col-xs-12 control-label">Caste <span
-                                        ></span></label>
+                                <label class="col-md-3 col-xs-12 control-label">Caste <span></span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa "></span></span>
                                         <input type="text" class="form-control" name="caste"
                                             value="{{old('caste', $getRecord->caste)}}" />
                                     </div>
-                                    <div >{{$errors->first('caste')}}</div>
+                                    <div>{{$errors->first('caste')}}</div>
                                 </div>
 
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 col-xs-12 control-label">Religion <span
-                                        ></span></label>
+                                <label class="col-md-3 col-xs-12 control-label">Religion <span></span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-id-card"></span></span>
                                         <input type="text" class="form-control" name="religion"
                                             value="{{old('religion', $getRecord->religion)}}" />
                                     </div>
-                                    <div >{{$errors->first('religion')}}</div>
+                                    <div>{{$errors->first('religion')}}</div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-3 col-xs-12 control-label">Mobile Number <span
-                                        ></span></label>
+                                <label class="col-md-3 col-xs-12 control-label">Mobile Number <span></span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
-                                        <span class="input-group-addon"><span class="fa fa-phone"></span></span>
+                                        <span class="input-group-addon"><span class="fa fa-briefcase"
+                                                aria-hidden="true"></span></span>
                                         <input type="text" class="form-control" name="mobile_number"
-                                            value="{{old('mobile_number')}}" />
+                                            value="{{old('mobile_number', $getRecord->mobile_number)}}" />
                                     </div>
-                                    <div >{{$errors->first('mobile_number', $getRecord->mobile_number)}}</div>
+                                    <div class="mobile_number">{{$errors->first('mobile_number')}}</div>
                                 </div>
                             </div>
-
 
                             <div class="form-group">
                                 <label class="col-md-3 col-xs-12 control-label">Admission Date <span
@@ -186,7 +185,7 @@
                                 </div>
                             </div>
 
-                            
+
 
                             <div class="form-group">
                                 <label class="col-md-3 col-xs-12 control-label">Profile Pic</label>
@@ -201,41 +200,38 @@
 
 
                             <div class="form-group">
-                                <label class="col-md-3 col-xs-12 control-label">Blood Group <span
-                                        ></span></label>
+                                <label class="col-md-3 col-xs-12 control-label">Blood Group <span></span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-phone"></span></span>
                                         <input type="text" class="form-control" name="blood_group"
                                             value="{{old('blood_group', $getRecord->blood_group)}}" />
                                     </div>
-                                    <div >{{$errors->first('blood_group')}}</div>
+                                    <div>{{$errors->first('blood_group')}}</div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-3 col-xs-12 control-label">Height <span
-                                        ></span></label>
+                                <label class="col-md-3 col-xs-12 control-label">Height <span></span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-header"></span></span>
                                         <input type="text" class="form-control" name="height"
                                             value="{{old('height', $getRecord->height)}}" />
                                     </div>
-                                    <div >{{$errors->first('height')}}</div>
+                                    <div>{{$errors->first('height')}}</div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-3 col-xs-12 control-label">Weight <span
-                                        ></span></label>
+                                <label class="col-md-3 col-xs-12 control-label">Weight <span></span></label>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-wikipedia-w"></span></span>
                                         <input type="text" class="form-control" name="weight"
                                             value="{{old('weight', $getRecord->weight)}}" />
                                     </div>
-                                    <div >{{$errors->first('weight')}}</div>
+                                    <div>{{$errors->first('weight')}}</div>
                                 </div>
                             </div>
 
@@ -249,7 +245,7 @@
                                 </div>
                             </div>
 
-                            
+
 
                             <div class="form-group">
                                 <label class="col-md-3 col-xs-12 control-label">Permanent Address <span
@@ -260,7 +256,7 @@
                                 </div>
                             </div>
 
-                            
+
                             <hr>
 
                             <div class="form-group">
@@ -281,7 +277,7 @@
                                 <div class="col-md-6 col-xs-12">
                                     <div class="input-group">
                                         <span class="input-group-addon"><span class="fa fa-unlock-alt"></span></span>
-                                        <input type="text" class="form-control" name="password"/>
+                                        <input type="text" class="form-control" name="password" />
                                     </div>
                                     (Leave blank if you don't want to change password)
                                 </div>

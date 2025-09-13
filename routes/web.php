@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\TeacherController;
 use App\Http\Controllers\Backend\SchoolAdminController;
 use App\Http\Controllers\Backend\ClassController;
 use App\Http\Controllers\Backend\SubjectController;
+use App\Http\Controllers\Backend\ParentController;
 use Dom\Text;
 use Illuminate\Support\Facades\Route;
 
@@ -95,6 +96,20 @@ Route::group(['middleware'=>'school'], function () {
     Route::get("panel/student/delete/{id}", [StudentController::class, 'delete_student']);
 
    Route::post("panel/student/getclass", [StudentController::class, 'getclass']);
+
+   //Parent
+
+    Route::get("panel/parent", [ParentController::class, 'parent_list']);
+
+    Route::get("panel/parent/create", [ParentController::class, 'create_parent']);
+
+    Route::post("panel/parent/create", [ParentController::class, 'insert_parent']);
+
+    Route::get("panel/parent/edit/{id}", [ParentController::class, 'edit_parent']);
+
+    Route::post("panel/parent/edit/{id}", [ParentController::class, 'update_parent']);
+
+    Route::get("panel/parent/delete/{id}", [ParentController::class, 'delete_parent']);
 
 
     // School Admin
