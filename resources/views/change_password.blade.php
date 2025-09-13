@@ -39,7 +39,7 @@
                                         <input type="password" class="form-control" name="old_password" required
                                             value="" />
                                     </div>
-                                    <div class="required">{{$errors->first('name')}}</div>
+                                    <div class="required">{{$errors->first('old_password')}}</div>
                                 </div>
                             </div>
 
@@ -52,7 +52,7 @@
                                         <input type="password" class="form-control" name="new_password" required
                                             value="" />
                                     </div>
-                                    <div class="required">{{$errors->first('name')}}</div>
+                                    <div class="required">{{$errors->first('new_password')}}</div>
                                 </div>
                             </div>
 
@@ -65,7 +65,7 @@
                                         <input type="password" class="form-control" name="confirm_password" required
                                             value="" />
                                     </div>
-                                    <div class="required">{{$errors->first('name')}}</div>
+                                    <div class="required">{{$errors->first('confirm_password')}}</div>
                                 </div>
                             </div>
                         

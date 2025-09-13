@@ -7,10 +7,41 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
     //
+
+    public function my_account(){
+        $data['getRecord'] = User::getSingle(Auth::user()->id);
+        $data['meta_title'] = "My Account";
+        return view('my_account',$data);
+    }
+
+    public function update_account(Request $request){
+        $user = User::getSingle(Auth::user()->id);
+        $user->name = $request->name;
+        if(Auth::user()->is_admin !=3){
+            $user->last_name = $request->last_name;
+        }
+
+        if(!empty($request->file('profile_pic'))){
+            $ext = $request->file('profile_pic')->getClientOriginalExtension();
+            $file = $request->file('profile_pic');
+            $randomStr = date('Ymdhis').Str::random(20);
+            $filename = strtolower($randomStr).'.'.$ext;
+            $file->move('upload/profile/',$filename);
+
+            $user->profile_pic = $filename;
+            
+        }
+
+        $user->save();
+        return redirect()->back()->with('success', 'Profile updated successfully');
+    }
+
+
     public function change_password(){
         $data['meta_title'] = "Change Password";
         return view('change_password',$data);

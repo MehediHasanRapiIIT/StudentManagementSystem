@@ -90,13 +90,12 @@
 
         <li class="{{Request::segment(2) == 'change-password' ? 'active' : ''}}">
                 <a href="{{url('panel/change-password')}}"><span class="fa fa-key"></span> <span class="xn-text">Change Password</span></a>
-
-        <li class="xn-openable">
-            <a href="#"><span class="fa fa-file-text-o"></span> <span class="xn-text">Layouts</span></a>
-            <ul>
-                <li><a href="layout-nav-toggled.html">List</a></li>
-            </ul>
         </li>
+
+        <li class="{{Request::segment(2) == 'my-account' ? 'active' : ''}}">
+                <a href="{{url('panel/my-account')}}"><span class="fa fa-cog"></span> <span class="xn-text">My Account</span></a>
+        </li>
+
     </ul>
     <!-- END X-NAVIGATION -->
 </div>
