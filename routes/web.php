@@ -34,6 +34,9 @@ Route::group(['middleware'=>'common'], function () {
 
 
 Route::group(['middleware'=>'admin'], function () {
+    
+    Route::get("panel/dashboard", [DashboardController::class, 'dashboard']);
+    
     Route::get("panel/school", [SchoolController::class, 'school_list']);
 
     Route::get("panel/school/create", [SchoolController::class, 'create_school']);
@@ -66,6 +69,7 @@ Route::group(['middleware'=>'admin'], function () {
 
 Route::group(['middleware'=>'school'], function () {
 
+    Route::get("panel/dashboard", [DashboardController::class, 'dashboard']);
 
     // Teacher
 
@@ -158,5 +162,29 @@ Route::group(['middleware'=>'school'], function () {
     Route::post("panel/subject/edit/{id}", [SubjectController::class, 'update_subject']);
 
     Route::get("panel/subject/delete/{id}", [SubjectController::class, 'delete_subject']);
+
+});
+
+
+Route::group(['middleware'=>'student'], function () {
+
+    Route::get("student/dashboard", [DashboardController::class, 'dashboard']);
+    // Student Panel Routes can be added here
+
+});
+
+
+Route::group(['middleware'=>'teacher'], function () {
+
+    Route::get("teacher/dashboard", [DashboardController::class, 'dashboard']);
+    // Teacher Panel Routes can be added here
+
+});
+
+
+Route::group(['middleware'=>'parent'], function () {
+
+    Route::get("parent/dashboard", [DashboardController::class, 'dashboard']);
+    // Parent Panel Routes can be added here
 
 });

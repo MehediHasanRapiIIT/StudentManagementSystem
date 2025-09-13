@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\ParentMiddleware;
 use App\Http\Middleware\SchoolMiddleware;
+use App\Http\Middleware\TeacherMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\AuthCommonMiddleware;
+use App\Http\Middleware\StudentMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -18,6 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'common' => AuthCommonMiddleware::class,
             'school' => SchoolMiddleware::class,
             'admin'=> AdminMiddleware::class,
+            'student' => StudentMiddleware::class,
+            'teacher' => TeacherMiddleware::class,
+            'parent' => ParentMiddleware::class,
         ]);
         //
     })

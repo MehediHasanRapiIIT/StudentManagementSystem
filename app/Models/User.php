@@ -294,6 +294,14 @@ class User extends Authenticatable
         }
     }
 
+    public function getProfileLive(){
+        if(!empty($this->profile_pic) && file_exists('upload/profile/'.$this->profile_pic)){
+            return url('upload/profile/'.$this->profile_pic);
+        }else{
+            return url('upload/profile/user.jpg');
+        }
+    }
+
     public static function getSingle($id){
         return self::find($id);
     }
