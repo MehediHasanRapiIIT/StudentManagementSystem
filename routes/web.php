@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\SchoolAdminController;
 use App\Http\Controllers\Backend\ClassController;
 use App\Http\Controllers\Backend\SubjectController;
 use App\Http\Controllers\Backend\ParentController;
+use App\Http\Controllers\Backend\UserController;
 use Dom\Text;
 use Illuminate\Support\Facades\Route;
 
@@ -28,7 +29,9 @@ Route::get("logout", [AuthController::class, 'logout']);
 
 Route::group(['middleware'=>'common'], function () {
 
-    Route::get("panel/dashboard", [DashboardController::class, 'dashboard']);
+    Route::get("panel/change-password", [UserController::class, 'change_password']);
+
+    Route::post("panel/change-password", [UserController::class, 'update_password']);
 
 });
 
