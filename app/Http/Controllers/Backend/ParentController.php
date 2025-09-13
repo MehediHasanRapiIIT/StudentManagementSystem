@@ -13,6 +13,16 @@ use Illuminate\Support\Str;
 class ParentController extends Controller
 {
     //
+
+    public function my_student($parent_id){
+        $data['getMyStudent'] = User::getStudent(Auth::user()->id, Auth::user()->is_admin);
+        $data['getRecord'] = User::getParentMyStudent($parent_id);
+        $data['meta_title'] = "Parent My Student";
+        $data['parent_id'] = $parent_id;
+        return view('backend.parent.my_student',$data);
+    }
+
+
     public function parent_list(){
         $data['getRecord'] = User::getParent(Auth::user()->id, Auth::user()->is_admin);
         $data['meta_title'] = "Parent";
@@ -26,6 +36,24 @@ class ParentController extends Controller
         $data['getSchoolAll'] = User::getSchoolAll();
         $data['meta_title'] = "Create Parent";
         return view('backend.parent.create',$data);
+    }
+
+    public function add_student($student_id, $parent_id){
+
+        $user = User::getSingle($student_id);
+        $user->parent_id = $parent_id;
+        $user->save();
+
+        return redirect()->back()->with('success', 'Student Added to Parent Successfully');
+    }
+
+    public function my_student_delete($student_id){
+
+        $user = User::getSingle($student_id);
+        $user->parent_id = null;
+        $user->save();
+
+        return redirect()->back()->with('success', 'Student removed From Parent Successfully');
     }
 
 

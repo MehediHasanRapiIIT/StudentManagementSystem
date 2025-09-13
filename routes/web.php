@@ -111,6 +111,12 @@ Route::group(['middleware'=>'school'], function () {
 
     Route::get("panel/parent/delete/{id}", [ParentController::class, 'delete_parent']);
 
+    Route::get("panel/parent/my-student/{id}", [ParentController::class, 'my_student']);
+
+    Route::get("panel/parent/add-student/{student_id}/{parent_id}", [ParentController::class, 'add_student']);
+
+    Route::get("panel/parent/my-student-delete/{student_id}", [ParentController::class, 'my_student_delete']);
+
 
     // School Admin
 
