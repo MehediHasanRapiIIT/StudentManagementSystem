@@ -81,6 +81,10 @@
                     <li class="{{Request::segment(2) == 'subject' ? 'active' : ''}}"><a
                             href="{{url('panel/subject')}}"><span class="fa fa-book"></span> <span
                                 class="xn-text">Subject</span></a></li>
+
+                    <li class="{{Request::segment(2) == 'assign-subject' ? 'active' : ''}}"><a
+                            href="{{url('panel/assign-subject')}}"><span class="fa fa-book"></span> <span
+                                class="xn-text">Assign Subject</span></a></li>
                 </ul>
             </li>
 
