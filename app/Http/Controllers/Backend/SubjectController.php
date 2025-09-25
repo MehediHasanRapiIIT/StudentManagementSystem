@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Models\WeekModel;
+use App\Models\ClassTimeTableModel;
 
 class SubjectController extends Controller
 {
@@ -150,6 +152,89 @@ class SubjectController extends Controller
         $save->is_delete = 1;
         $save->save();
         return redirect('panel/assign-subject')->with('success', 'Subject Deleted Successfully');
+    }
+
+    //Class Timetable
+    public function class_timetable(Request $request){
+        if(!empty($request->class_id)){
+            $getSubject = SubjectClassModel::getSelectedSubject($request->class_id,Auth::user()->id);
+        }else{
+            $getSubject = '';
+        }
+        $data['getSubject'] = $getSubject;
+
+        $result = array();
+        $getWeek = WeekModel::getRecord();
+        foreach($getWeek as $week){
+            $arraydata = array();
+            $arraydata['id'] = $week->id;
+            $arraydata['week_name'] = $week->name;
+            if(!empty($request->class_id)&& !empty($request->subject_id))
+            {
+                $getClassTimeTable = ClassTimeTableModel::getRecord($request->class_id, $request->subject_id, $week->id);
+                if(!empty($getClassTimeTable)){
+                    $arraydata['start_time'] = $getClassTimeTable->start_time;
+                    $arraydata['end_time'] = $getClassTimeTable->end_time;
+                    $arraydata['room_number'] = $getClassTimeTable->room_number;
+                }else{
+                    $arraydata['start_time'] = '';
+                    $arraydata['end_time'] = '';
+                    $arraydata['room_number'] = '';
+                }
+            }else
+            {
+                    $arraydata['start_time'] = '';
+                    $arraydata['end_time'] = '';
+                    $arraydata['room_number'] = '';
+            }
+            
+            $result[] = $arraydata;
+        }
+        $data['getRecord'] = $result;
+
+        $data['getClass'] = ClassModel::getRecordActive(Auth::user()->id);
+        $data['meta_title'] = "Class Timetable";
+        return view('backend.class_timetable.list',$data);
+    }
+    public function get_assign_subject_class(Request $request){
+        $getSubject = SubjectClassModel::getSelectedSubject($request->class_id,Auth::user()->id);
+        $html = '';
+    $html .= '<option value="">Select</option>';
+    foreach($getSubject as $subject)
+    {
+        $html .= '<option value="'.$subject->subject_id.'">'.$subject->subject_name.'</option>';
+    }
+
+    $json['success'] = $html;
+    echo json_encode($json);
+    }
+
+    public function save_class_timetable(Request $request){
+        if(!empty($request->class_id)&& !empty($request->subject_id))
+        {
+            ClassTimeTableModel::DeleteRecord($request->class_id, $request->subject_id);
+            foreach($request->timetable as $timetable)
+            {
+                if(!empty($timetable['week_id']) && !empty($timetable['start_time']) && !empty($timetable['end_time']) && !empty($timetable['room_number']))
+                {
+                    $save = new ClassTimeTableModel;
+
+                    $save->class_id = trim($request->class_id);
+                    $save->subject_id = trim($request->subject_id);
+                    $save->week_id = trim($timetable['week_id']);
+                    $save->start_time = trim($timetable['start_time']);
+                    $save->end_time = trim($timetable['end_time']);
+                    $save->room_number = trim($timetable['room_number']);
+                    $save->save();
+                }
+            }
+           return redirect()->back()->with('success', 'Class Timetable Saved Successfully');
+
+        }else
+        {
+            return redirect()->back()->with('error', 'Class and Subject are required');
+        }
+        dd($request->all());
     }
 
 }

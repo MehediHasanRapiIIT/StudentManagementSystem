@@ -184,6 +184,11 @@ Route::group(['middleware'=>'school'], function () {
     Route::post("panel/assign-subject/edit/{id}", [SubjectController::class, 'update_assign_subject']);
 
     Route::get("panel/assign-subject/delete/{id}", [SubjectController::class, 'delete_assign_subject']);
+
+    //Class Timetable Route
+    Route::get("panel/class-timetable", [SubjectController::class, 'class_timetable']);
+    Route::post("panel/class-timetable", [SubjectController::class, 'save_class_timetable']);
+    Route::post("panel/get_assign_subject_class", [SubjectController::class, 'get_assign_subject_class']);
     
 
 });
