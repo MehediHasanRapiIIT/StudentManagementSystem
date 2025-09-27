@@ -35,33 +35,15 @@
                         {{ csrf_field() }}
 
                         <div class="col-md-2">
-                            <label>Id</label>
-                            <input type="text" class="form-control" value="{{ Request::get('id')}}" placeholder="ID"
-                                name="id">
-                        </div>
-                        <div class="col-md-2">
-                            <label>My Class & Subject Name</label>
-                            <input type="text" class="form-control" value="{{ Request::get('name')}}"
-                                placeholder="My Class & Subject Name" name="name">
-                        </div>
-                        <div class="col-md-2">
-                            <label>Email</label>
-                            <input type="text" class="form-control" value="{{ Request::get('email')}}"
-                                placeholder="Email" name="email">
-                        </div>
-                        <div class="col-md-2">
-                            <label>Address</label>
-                            <input type="text" class="form-control" value="{{ Request::get('address')}}"
-                                placeholder="Address" name="address">
-                        </div>
-                        <div class="col-md-2">
-                            <label>Status</label>
-                            <select name="status" id="">
-                                <option value="">Select Status</option>
-                                <option {{ Request::get('status') == 1 ? 'selected' : ''}} value="1">Active</option>
-                                <option {{ Request::get('status') == 100 ? 'selected' : ''}} value="100">Inactive</option>
-                            </select>
-                        </div>
+                                <label>Class Name</label>
+                                <input type="text" class="form-control" value="{{ Request::get('class_name')}}"
+                                    placeholder="Class Name" name="class_name">
+                            </div>
+                            <div class="col-md-2">
+                                <label>Subject Name</label>
+                                <input type="text" class="form-control" value="{{ Request::get('subject_name')}}"
+                                    placeholder="Subject Name" name="subject_name">
+                            </div>
                         <div style="clear: both;"></div>
                         <br>
                         <div class="col-md-12">
@@ -103,7 +85,7 @@
                                         <td></td>
                                         <td>{{date('d-m-Y H:i A', strtotime($value->created_at))}}</td>
                                         <td>
-                                            
+
                                         </td>
                                     </tr>
                                 @empty

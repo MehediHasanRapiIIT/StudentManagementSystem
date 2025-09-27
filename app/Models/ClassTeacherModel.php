@@ -86,6 +86,12 @@ class ClassTeacherModel extends Model
                         ->join('subject_class','subject_class.class_id','=','class_teacher.class_id')
                         ->join('subject','subject.id','=','subject_class.subject_id');
 
+            if(!empty(Request::get('class_name'))){
+                $return= $return->where('class.name',"like","%".Request::get('class_name')."%");
+            }
+            if(!empty(Request::get('subject_name'))){
+                $return= $return->where('subject.name',"like","%".Request::get('subject_name')."%");
+            }
 
             $return = $return->where('class_teacher.teacher_id','=',$teacher_id)
                              ->where('class_teacher.is_delete',"=",0)
