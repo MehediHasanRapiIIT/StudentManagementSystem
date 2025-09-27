@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClassModel;
+use App\Models\ClassTeacherModel;
 use App\Models\User;
 use App\Models\Class;
 use Illuminate\Http\Request;
@@ -64,5 +65,91 @@ class ClassController extends Controller
         $save->is_delete = 1;
         $save->save();
         return redirect('panel/class')->with('success', 'Class Deleted Successfully');
+    }
+
+    //Assign Class Teacher
+    public function assign_class_teacher_list(){
+    
+        $data['getRecord'] = ClassTeacherModel::getRecord(Auth::user()->id, Auth::user()->is_admin);
+        $data['meta_title'] = "Assign Class Teacher";
+        return view('backend.assign_class_teacher.list',$data);
+    
+    }
+
+    public function create_assign_class_teacher(Request $request){
+
+        $data['getTeacher'] = User::getTeacherActive(Auth::user()->id);
+
+        $data['getClass'] = ClassModel::getRecordActive(Auth::user()->id);
+        $data['meta_title'] = "Create Assign Class Teacher";
+        return view('backend.assign_class_teacher.create',$data);
+    }
+
+    public function insert_assign_class_teacher(Request $request){
+
+         if(!empty($request->class_id) && !empty($request->teacher_id)){
+            foreach($request->teacher_id as $teacher_id){
+                if(!empty($teacher_id)){
+
+                    $check = ClassTeacherModel::checkClassTeacher(Auth::user()->id,$request->class_id,$teacher_id);
+                    if(empty($check)){
+                        $save = new ClassTeacherModel;
+
+                        $save->class_id = trim($request->class_id);
+                        $save->teacher_id = trim($teacher_id);
+                        $save->status = trim($request->status);
+                        $save->created_by_id = Auth::user()->id;
+                        $save->save();
+                    }
+                }
+            }
+        }
+
+        return redirect('panel/assign-class-teacher')->with('success', 'Assign Class Teacher Created Successfully');
+    }
+
+    public function edit_assign_class_teacher($id){
+        $getRecord = ClassTeacherModel::getSingle($id);
+        $data['getRecord'] = $getRecord;
+            $data['getSelectedTeacher'] = ClassTeacherModel::getSelectedTeacher($getRecord->class_id,Auth::user()->id);
+        $data['getTeacher'] = User::getTeacherActive(Auth::user()->id);
+
+        $data['getClass'] = ClassModel::getRecordActive(Auth::user()->id);
+
+        $data['meta_title'] = "Edit Assign Class Teacher";
+        return view('backend.assign_class_teacher.edit',$data);
+    }
+
+    public function update_assign_class_teacher(Request $request,$id){
+    
+        if(!empty($request->class_id)){
+        ClassTeacherModel::deleteClassTeacher($request->class_id, Auth::user()->id);
+
+            foreach($request->teacher_id as $teacher_id){
+                if(!empty($teacher_id)){
+
+                    $check = ClassTeacherModel::checkClassTeacher(Auth::user()->id,$request->class_id,$teacher_id);
+                    if(empty($check)){
+                        $save = new ClassTeacherModel;
+
+                        $save->class_id = trim($request->class_id);
+                        $save->teacher_id = trim($teacher_id);
+                        $save->status = trim($request->status);
+                        $save->created_by_id = Auth::user()->id;
+                        $save->save();
+                    }
+                }
+            }
+        }
+
+        return redirect('panel/assign-class-teacher')->with('success', 'Assign Class Teacher Updated Successfully');
+    
+    }
+
+    public function delete_assign_class_teacher($id){
+        $save = ClassTeacherModel::getSingle($id);
+        $save->is_delete = 1;
+        $save->save();
+        return redirect('panel/assign-class-teacher')->with('success', 'Assign Class Teacher Deleted Successfully');
     }
 }

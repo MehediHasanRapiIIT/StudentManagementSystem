@@ -72,7 +72,7 @@
         @endif
 
         @if(Auth::user()->is_admin == 3)
-            <li class="xn-openable {{Request::segment(2) == 'class' || Request::segment(2) == 'subject' || Request::segment(2) == 'class-timetable' || Request::segment(2) == 'assign-subject' ? 'active' : ''}}">
+            <li class="xn-openable {{Request::segment(2) == 'class' || Request::segment(2) == 'subject' || Request::segment(2) == 'class-timetable' || Request::segment(2) == 'assign-subject' || Request::segment(2) == 'assign-class-teacher' ? 'active' : ''}}">
                 <a href="#"><span class="fa fa-building"></span> <span class="xn-text">Academics</span></a>
                 <ul>
                     <li class="{{Request::segment(2) == 'class' ? 'active' : ''}}"><a href="{{url('panel/class')}}"><span
@@ -88,6 +88,9 @@
                     <li class="{{Request::segment(2) == 'class-timetable' ? 'active' : ''}}"><a
                             href="{{url('panel/class-timetable')}}"><span class="fa fa-table"></span> <span
                                 class="xn-text">Class Timetable</span></a></li>
+                    <li class="{{Request::segment(2) == 'assign-class-teacher' ? 'active' : ''}}"><a
+                            href="{{url('panel/assign-class-teacher')}}"><span class="fa fa-superpowers"></span> <span
+                                class="xn-text">Assign Class Teacher</span></a></li>
                 </ul>
             </li>
 

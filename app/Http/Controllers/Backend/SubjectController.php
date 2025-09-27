@@ -234,7 +234,7 @@ class SubjectController extends Controller
         {
             return redirect()->back()->with('error', 'Class and Subject are required');
         }
-        dd($request->all());
+        
     }
 
 }
