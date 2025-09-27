@@ -152,4 +152,33 @@ class ClassController extends Controller
         $save->save();
         return redirect('panel/assign-class-teacher')->with('success', 'Assign Class Teacher Deleted Successfully');
     }
+
+    public function edit_single_assign_class_teacher($id){
+        $data['getRecord'] = ClassTeacherModel::getSingle($id);
+        $data['getTeacher'] = User::getTeacherActive(Auth::user()->id);
+
+        $data['getClass'] = ClassModel::getRecordActive(Auth::user()->id);
+
+        $data['meta_title'] = "Edit Single Assign Class Teacher";
+        return view('backend.assign_class_teacher.edit_single',$data);
+    }
+
+    public function update_single_assign_class_teacher(Request $request){
+        $check = ClassTeacherModel::checkClassTeacherSingle(Auth::user()->id,$request->class_id,$request->teacher_id);
+                    if(empty($check)){
+                        $save = new ClassTeacherModel;
+
+                        $save->class_id = trim($request->class_id);
+                        $save->teacher_id = trim($request->teacher_id);
+                        $save->status = trim($request->status);
+                        $save->created_by_id = Auth::user()->id;
+                        $save->save();
+                    }else{
+                        $check->class_id = trim($request->class_id);
+                        $check->teacher_id = trim($request->teacher_id);
+                        $check->status = trim($request->status);
+                        $check->save();
+                    }
+        return redirect('panel/assign-class-teacher')->with('success', 'Assign Class Teacher Updated Successfully');
+    }
 }

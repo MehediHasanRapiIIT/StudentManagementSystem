@@ -112,6 +112,8 @@
                                                     onclick="return confirm('Are you sure that you want to delete?');"
                                                     class="btn btn-danger btn-rounded btn-sm"><span
                                                         class="fa fa-times"></span></a>
+                                                <a href="{{url('panel/assign-subject/edit-single/' . $value->id)}}"
+                                                    class="btn btn-primary btn-rounded btn-sm">Edit Single</a>
                                             </td>
                                         </tr>
                                     @empty

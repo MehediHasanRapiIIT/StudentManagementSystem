@@ -52,6 +52,14 @@ class SubjectClassModel extends Model
                 ->count();
         
     }
+    public static function checkClassSubjectSingle($created_by_id,$class_id,$subject_id){
+        return self::where('created_by_id','=',$created_by_id)
+                ->where('class_id','=',$class_id)
+                ->where('subject_id','=',$subject_id)
+                ->where('is_delete','=',0)
+                ->first();
+        
+    }
 
     public static function getSelectedSubject($class_id, $created_by_id){
         return self::select('subject_class.*','subject.name as subject_name')
