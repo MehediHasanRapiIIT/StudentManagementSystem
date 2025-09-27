@@ -30,6 +30,9 @@
         <li class="{{Request::segment(1) == 'teacher' ? 'active' : ''}}">
             <a href="{{url('teacher/dashboard')}}"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
         </li>
+        <li class="{{Request::segment(1) == 'my-class-subject' ? 'active' : ''}}">
+            <a href="{{url('teacher/my-class-subject')}}"><span class="fa fa-user"></span> <span class="xn-text">My Class & Subject</span></a>
+        </li>
         @elseif (Auth::user()->is_admin == 6)
         <li class="{{Request::segment(1) == 'student' ? 'active' : ''}}">
             <a href="{{url('student/dashboard')}}"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>

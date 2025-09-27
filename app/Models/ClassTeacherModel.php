@@ -78,6 +78,25 @@ class ClassTeacherModel extends Model
     return self::where('created_by_id','=',$created_by_id)
             ->where('class_id','=',$class_id)
             ->delete();
-}
+    }
+
+    public static function getRecordTeacher($teacher_id){
+            $return = self::select('class_teacher.*','class.name as class_name','subject.name as subject_name', 'subject.type as subject_type')
+                        ->join('class','class.id','=','class_teacher.class_id')
+                        ->join('subject_class','subject_class.class_id','=','class_teacher.class_id')
+                        ->join('subject','subject.id','=','subject_class.subject_id');
+
+
+            $return = $return->where('class_teacher.teacher_id','=',$teacher_id)
+                             ->where('class_teacher.is_delete',"=",0)
+                             ->where('class_teacher.status',"=",1)
+                             ->where('subject_class.is_delete',"=",0)
+                             ->where('subject_class.status',"=",1)
+                             ->orderBy('class_teacher.id','desc')
+                             ->paginate(20);
+
+        return $return;
+
+    }
 }
 

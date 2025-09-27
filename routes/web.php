@@ -222,6 +222,7 @@ Route::group(['middleware'=>'teacher'], function () {
 
     Route::get("teacher/dashboard", [DashboardController::class, 'dashboard']);
     // Teacher Panel Routes can be added here
+    Route::get("teacher/my-class-subject", [ClassController::class, 'TeacherClassSubject']);
 
 });
 

@@ -1,0 +1,136 @@
+@extends('backend.layouts.app')
+
+
+@section('content')
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li class="active">My Class & Subject</li>
+</ul>
+<!-- END BREADCRUMB -->
+
+<!-- PAGE TITLE -->
+<div class="page-title">
+    <h2><span class="fa fa-arrow-circle-o-left"></span> My Class & Subject</h2>
+</div>
+<!-- END PAGE TITLE -->
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+
+    <!-- START RESPONSIVE TABLES -->
+    <div class="row">
+        <div class="col-md-12">
+            @include('_message')
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    <h3 class="panel-title">Search My Class & Subject</h3>
+                </div>
+
+                <div class="panel-body">
+
+                    <form action="" method="get">
+                        {{ csrf_field() }}
+
+                        <div class="col-md-2">
+                            <label>Id</label>
+                            <input type="text" class="form-control" value="{{ Request::get('id')}}" placeholder="ID"
+                                name="id">
+                        </div>
+                        <div class="col-md-2">
+                            <label>My Class & Subject Name</label>
+                            <input type="text" class="form-control" value="{{ Request::get('name')}}"
+                                placeholder="My Class & Subject Name" name="name">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Email</label>
+                            <input type="text" class="form-control" value="{{ Request::get('email')}}"
+                                placeholder="Email" name="email">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Address</label>
+                            <input type="text" class="form-control" value="{{ Request::get('address')}}"
+                                placeholder="Address" name="address">
+                        </div>
+                        <div class="col-md-2">
+                            <label>Status</label>
+                            <select name="status" id="">
+                                <option value="">Select Status</option>
+                                <option {{ Request::get('status') == 1 ? 'selected' : ''}} value="1">Active</option>
+                                <option {{ Request::get('status') == 100 ? 'selected' : ''}} value="100">Inactive</option>
+                            </select>
+                        </div>
+                        <div style="clear: both;"></div>
+                        <br>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary" value="Search">Search</button>
+                            <a href="{{url('panel/my-class-subject')}}" class="btn btn-success">Reset</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    <h3 class="panel-title">My Class & Subject List</h3>
+                </div>
+
+                <div class="panel-body panel-body-table">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-actions">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Class Name</th>
+                                    <th>Subject Name</th>
+                                    <th>Subject Type</th>
+                                    <th>My Class Timetable</th>
+                                    <th>Created Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($getRecord as $value )
+                                    <tr>
+                                        <td>{{ $value->id }}</td>
+                                        <td>{{ $value->class_name }}</td>
+                                        <td>{{ $value->subject_name }}</td>
+                                        <td>{{ $value->subject_type}}</td>
+                                        <td></td>
+                                        <td>{{date('d-m-Y H:i A', strtotime($value->created_at))}}</td>
+                                        <td>
+                                            
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="100%">No Data Found</td>
+                                    </tr>
+                                    
+                                @endforelse
+                                
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="pull-right">
+                {{ $getRecord->appends(Request::all())->links() }}
+            </div>
+
+        </div>
+    </div>
+    <!-- END RESPONSIVE TABLES -->
+
+    <!-- END PAGE CONTENT WRAPPER -->
+</div>
+@endsection
+
+@section('script')
+@endsection

@@ -181,4 +181,10 @@ class ClassController extends Controller
                     }
         return redirect('panel/assign-class-teacher')->with('success', 'Assign Class Teacher Updated Successfully');
     }
+
+    public function TeacherClassSubject(){
+        $data['getRecord'] = ClassTeacherModel::getRecordTeacher(Auth::user()->id);
+        $data['meta_title'] = "My Class & Subject";
+        return view('teacher.class_subject.list',$data);
+    }
 }
