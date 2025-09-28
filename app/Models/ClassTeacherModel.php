@@ -81,7 +81,7 @@ class ClassTeacherModel extends Model
     }
 
     public static function getRecordTeacher($teacher_id){
-            $return = self::select('class_teacher.*','class.name as class_name','subject.name as subject_name', 'subject.type as subject_type')
+            $return = self::select('class_teacher.*','class.name as class_name','subject.name as subject_name', 'subject.type as subject_type','subject_class.subject_id')
                         ->join('class','class.id','=','class_teacher.class_id')
                         ->join('subject_class','subject_class.class_id','=','class_teacher.class_id')
                         ->join('subject','subject.id','=','subject_class.subject_id');

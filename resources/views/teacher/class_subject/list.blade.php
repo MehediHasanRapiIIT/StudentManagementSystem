@@ -82,10 +82,23 @@
                                         <td>{{ $value->class_name }}</td>
                                         <td>{{ $value->subject_name }}</td>
                                         <td>{{ $value->subject_type}}</td>
-                                        <td></td>
+                                        <td>
+                                            @php
+                                                $getClassTimeTable = App\Models\ClassTimeTableModel::getRecordWeekName($value->class_id, $value->subject_id, date('l'));
+                                            @endphp
+                                            @if (!empty($getClassTimeTable))
+
+                                                {{date(' H:i A', strtotime($getClassTimeTable->start_time))}} - {{date('H:i A', strtotime($getClassTimeTable->end_time))}}
+                                                <br/>
+                                                Room Number: {{$getClassTimeTable->room_number}}
+                                                
+                                            @endif
+                                        </td>
                                         <td>{{date('d-m-Y H:i A', strtotime($value->created_at))}}</td>
                                         <td>
-
+                                            <a href="{{url('teacher/my-class-subject/timetable/'.$value->class_id.'/'.$value->subject_id)}}" class="btn btn-primary btn-sm btn-rounded">
+                                                Class Timetable
+                                            </a>
                                         </td>
                                     </tr>
                                 @empty

@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\ClassModel;
 use App\Models\ClassTeacherModel;
+use App\Models\SubjectModel;
 use App\Models\User;
 use App\Models\Class;
+use App\Models\ClassTimeTableModel;
+use App\Models\WeekModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -186,5 +189,33 @@ class ClassController extends Controller
         $data['getRecord'] = ClassTeacherModel::getRecordTeacher(Auth::user()->id);
         $data['meta_title'] = "My Class & Subject";
         return view('teacher.class_subject.list',$data);
+    }
+
+    public function TeacherTimeTable($class_id, $subject_id){
+         $result = array();
+        $getWeek = WeekModel::getRecord();
+        foreach($getWeek as $week){
+            $arraydata = array();
+            $arraydata['id'] = $week->id;
+            $arraydata['week_name'] = $week->name;
+            
+                $getClassTimeTable = ClassTimeTableModel::getRecord($class_id, $subject_id, $week->id);
+                if(!empty($getClassTimeTable)){
+                    $arraydata['start_time'] = $getClassTimeTable->start_time;
+                    $arraydata['end_time'] = $getClassTimeTable->end_time;
+                    $arraydata['room_number'] = $getClassTimeTable->room_number;
+                }else{
+                    $arraydata['start_time'] = '';
+                    $arraydata['end_time'] = '';
+                    $arraydata['room_number'] = '';
+                }
+            
+            $result[] = $arraydata;
+        }
+        $data['getRecord'] = $result;
+        $data['getClass'] = ClassModel::getSingle($class_id);
+        $data['getSubject'] = SubjectModel::getSingle($subject_id);
+        $data['meta_title'] = "My Class & Subject Timetable";
+        return view('teacher.class_subject.timetable', $data);
     }
 }
